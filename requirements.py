@@ -4,7 +4,7 @@ with open("requirements.txt", "w") as f:
     f.write("pandas==2.2.2\n")
     f.write("matplotlib==3.10.3\n")
     f.write("seaborn==0.13.2\n")
-    f.write("pillow==9.5.0\n")  
+    f.write("pillow==10.2.0\n")  
 print("✅ requirements.txt created successfully!")
 
 # Optional install line
