@@ -108,7 +108,7 @@ selected_question = st.selectbox("Choose a specific question to explore:", quest
 if selected_question == questions[0]:
     st.subheader("📦 Most Frequently Ordered Categories")
     data = merged_df['category'].value_counts().head(10)
-    fig, ax = plt.subplots(figsize=(8, 4))
+    fig, ax = plt.subplots(figsize=(6, 3))
     sns.barplot(x=data.values, y=data.index, palette=blinkit_palette_10, ax=ax,edgecolor='black')
     ax.set_xlabel("Order Count")
     ax.set_ylabel("Category")
@@ -117,7 +117,7 @@ if selected_question == questions[0]:
 elif selected_question == questions[1]:
     st.subheader("💰 Revenue per Product Category")
     data = merged_df.groupby('category')['price'].sum().sort_values(ascending=False).head(10)
-    fig, ax = plt.subplots(figsize=(8, 4))
+    fig, ax = plt.subplots(figsize=(6, 3))
     sns.barplot(x=data.values, y=data.index, palette=blinkit_palette_10, ax=ax,edgecolor='black')
     ax.set_xlabel("Revenue")
     ax.set_ylabel("Category")
@@ -126,7 +126,7 @@ elif selected_question == questions[1]:
 elif selected_question == questions[2]:
     st.subheader("📊 Avg Order Value per Segment")
     data = merged_df.groupby('customer_segment')['price'].mean()
-    fig, ax = plt.subplots(figsize=(4, 4))
+    fig, ax = plt.subplots(figsize=(2, 2))
     sns.barplot(x=data.index, y=data.values, palette=blinkit_palette_10, ax=ax,edgecolor='black')
     ax.set_ylabel("Average Order Value")
     ax.set_xlabel("Customer Segment")
@@ -144,7 +144,7 @@ elif selected_question == questions[3]:
 elif selected_question == questions[4]:
     st.subheader("⏱️ Avg Delivery Time by Category")
     data = merged_df.groupby('category')['delivery_time_minutes'].mean().sort_values().head(10)
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 2))
     sns.barplot(x=data.values, y=data.index, palette=blinkit_palette_10, ax=ax,edgecolor='black')
     ax.set_xlabel("Avg Delivery Time (min)")
     ax.set_ylabel("Category")
@@ -162,7 +162,7 @@ elif selected_question == questions[5]:
 elif selected_question == questions[6]:
     st.subheader("📍 Top Areas by Delivery Delay")
     data = merged_df.groupby('area')['delivery_delay_minutes'].mean().sort_values(ascending=False).head(10)
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 2))
     sns.barplot(x=data.values, y=data.index, palette=blinkit_palette_10, ax=ax)
     ax.set_xlabel("Avg Delivery Delay (min)")
     ax.set_ylabel("Area")
@@ -171,7 +171,7 @@ elif selected_question == questions[6]:
 elif selected_question == questions[7]:
     st.subheader("🚚 Top Delivery Partners by Distance")
     data = merged_df.groupby('delivery_partner_id')['distance_km'].mean().sort_values(ascending=False).head(10)
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 2))
     sns.lineplot(x=data.values, y=data.index.astype(str), marker='o', linewidth=2, color='#FFCD00', ax=ax)
     ax.set_xlabel("Avg Distance (km)")
     ax.set_ylabel("Delivery Partner ID")
@@ -181,14 +181,14 @@ elif selected_question == questions[7]:
 elif selected_question == questions[8]:
     st.subheader("⭐ Average Rating by Segment")
     data = merged_df.groupby('customer_segment')['rating'].mean()
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 2))
     ax.pie(data.values, labels=data.index, colors=blinkit_palette_10, autopct='%1.1f%%',textprops={'color':'red'})
     st.pyplot(fig)
 
 elif selected_question == questions[9]:
     st.subheader("🥇 Top 10 Most Ordered Products")
     data = merged_df['product_name'].value_counts().head(10)
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 2))
     sns.barplot(x=data.values, y=data.index, palette=blinkit_palette_10, ax=ax)
     ax.set_xlabel("Order Count")
     ax.set_ylabel("Product")
@@ -198,7 +198,7 @@ elif selected_question == questions[10]:
     st.subheader("💎 Top Rated Products by Price")
     top_products = merged_df.groupby('product_name').agg({'rating': 'mean', 'price': 'mean'}).sort_values(by='rating', ascending=False).head(10)
     colors = sns.color_palette(blinkit_palette_10)
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(4, 4))
     for (product, row), color in zip(top_products.iterrows(), colors):
         plt.scatter(row['price'], row['rating'], color=color, s=100, label=product)
     plt.xlabel('Average Price (₹)')
@@ -211,7 +211,7 @@ elif selected_question == questions[10]:
 elif selected_question == questions[11]:
     st.subheader("📦 Top Areas by Order Count")
     data = merged_df['area'].value_counts().head(10)
-    fig, ax = plt.subplots(figsize=(7, 4))
+    fig, ax = plt.subplots(figsize=(4, 3))
     sns.barplot(x=data.values, y=data.index, palette=blinkit_palette_10, ax=ax)
     ax.set_xlabel("Order Count")
     ax.set_ylabel("Area")
@@ -221,7 +221,7 @@ elif selected_question == questions[12]:
     st.subheader("😊 Sentiment Distribution of Customer Feedback")
     sentiment_counts = merged_df['sentiment'].value_counts()
     colors = ['#00A862', '#FFCD00', '#000000']
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(4, 4))
     ax.pie(sentiment_counts.values,
            labels=sentiment_counts.index,
            autopct='%1.1f%%',
@@ -235,7 +235,7 @@ elif selected_question == questions[13]:
     st.subheader("📊 Correlation Matrix for Key Numerical Columns")
     corr_matrix = merged_df[['price', 'rating', 'order_total', 'delivery_time_minutes', 'distance_km']].corr()
     st.dataframe(corr_matrix.style.format("{:.2f}"))
-    fig, ax = plt.subplots(figsize=(6, 6))
+    fig, ax = plt.subplots(figsize=(4, 4))
     sns.heatmap(corr_matrix, annot=True, cmap=blinkit_palette_10, fmt=".2f", linewidths=0.5, ax=ax)
     ax.set_title('Correlation Matrix: Price, Rating, Delivery Time, etc.')
     st.pyplot(fig)
@@ -244,7 +244,7 @@ elif selected_question == questions[13]:
 elif selected_question == questions[14]:
     st.subheader("📦 Top Products by Damage Rate")
     data = merged_df.groupby('product_name')['damage_rate'].mean().sort_values(ascending=False).head(10)
-    fig, ax = plt.subplots(figsize=(7, 4))
+    fig, ax = plt.subplots(figsize=(5, 2))
     sns.barplot(x=data.values, y=data.index, palette=blinkit_palette_10, ax=ax)
     ax.set_xlabel("Damage Rate")
     ax.set_ylabel("Product")
@@ -254,7 +254,7 @@ elif selected_question == questions[15]:
     st.subheader("💰 Average Price by Product Category")
     avg_price_by_category = merged_df.groupby('category')['price'].mean().sort_values(ascending=False)
 
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 2))
     ax.plot(avg_price_by_category.index, avg_price_by_category.values, marker='o', linestyle='-', color='#00A862')
     ax.set_xlabel('Product Category')
     ax.set_ylabel('Average Price (₹)')
@@ -269,7 +269,7 @@ elif selected_question == questions[16]:
     st.subheader("⏰ Order Count by Hour of the Day")
     merged_df['order_hour'] = pd.to_datetime(merged_df['order_date']).dt.hour
     hourly_orders = merged_df['order_hour'].value_counts().sort_index()
-    fig, ax = plt.subplots(figsize=(7, 4))
+    fig, ax = plt.subplots(figsize=(5, 2))
     ax.plot(hourly_orders.index, hourly_orders.values, marker='o', linestyle='-', color='#00A862')
 
     ax.set_xlabel('Hour of Day (0–23)')
@@ -284,7 +284,7 @@ elif selected_question == questions[17]:
     st.subheader("😠 Top Categories Receiving Negative Sentiment")
 
     negative_category_counts = merged_df[merged_df['sentiment'] == 'Negative']['category'].value_counts().head(5)
-    fig, ax = plt.subplots(figsize=(6, 4))
+    fig, ax = plt.subplots(figsize=(4, 2))
     ax.pie(negative_category_counts.values,
            labels=negative_category_counts.index,
            autopct='%1.1f%%',
@@ -297,7 +297,7 @@ elif selected_question == questions[17]:
 elif selected_question == questions[18]:
     st.subheader("📦 Price Distribution by Product Category (Below ₹1000)")
     filtered_df = merged_df[merged_df['price'] < 1000]
-    fig, ax = plt.subplots(figsize=(7, 4))
+    fig, ax = plt.subplots(figsize=(5, 2))
     sns.boxplot(
         x='category',
         y='price',
@@ -316,3 +316,4 @@ elif selected_question == questions[18]:
 
 st.markdown("---")
 st.markdown("*Dashboard 💻*")
+
